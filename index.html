@@ -115,7 +115,7 @@ dialog::backdrop{background:var(--scrim)}
   dialog[open]{animation:rise .32s cubic-bezier(.2,.8,.2,1)}
   @keyframes rise{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 }
-.d-ph{position:relative;aspect-ratio:6/5;background:var(--photo);overflow:hidden}
+.d-ph{position:relative;aspect-ratio:182/196;width:min(100%,calc(62vh * 182 / 196));width:min(100%,calc(62dvh * 182 / 196));margin-inline:auto;background:var(--photo);overflow:hidden}
 .d-ph img{display:block;width:100%;height:100%;object-fit:cover}
 .x{position:absolute;top:12px;right:12px;z-index:2;background:var(--paper);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;padding:8px 10px 7px;line-height:1}
 .d-body{padding:22px clamp(20px,5vw,32px) 8px}
@@ -289,14 +289,14 @@ const ITEMS = [
         en:['Fresh croissant','İzmir tulum cheese','Beef ham','Fried egg','Seasonal fruit','Black olives','Jam','Nutella']},
    alg:['gluten','egg','milk','hazelnut'], diet:[]},
 
-  {id:'dereotlu-omlet', cat:'kahvalti', img:'dsc04061', price:310,
+  {id:'dereotlu-omlet', cat:'kahvalti', img:'dereotlu', price:310,
    name:{tr:'Dereotlu & İzmir Tulum Peynirli Omlet', en:'Dill & Tulum Cheese Omelette'},
    sub:{tr:'Dereotu ve tulum peynirli omlet', en:'Omelette with dill and tulum cheese'},
    about:{tr:'Çırpılmış yumurta arasında taze dereotu ve İzmir tulum peynirli omlet. '+SIDE_ABOUT_TR, en:'Omelette with fresh dill and İzmir tulum cheese. '+SIDE_ABOUT_EN},
    ing:{tr:['Çırpılmış yumurta','Taze dereotu','İzmir tulum peyniri',...SIDE_TR], en:['Whisked eggs','Fresh dill','İzmir tulum cheese',...SIDE_EN]},
    alg:['gluten','milk','walnut'], diet:['veg']},
 
-  {id:'sade-omlet', cat:'kahvalti', img:null, price:260,
+  {id:'sade-omlet', cat:'kahvalti', img:'dsc04061', price:260,
    name:{tr:'Sade Omlet', en:'Plain Omelette'},
    sub:{tr:'Klasik omlet', en:'Classic omelette'},
    about:{tr:'Çırpılmış yumurta ile hazırlanmış omlet. '+SIDE_ABOUT_TR, en:'Omelette made with whisked eggs. '+SIDE_ABOUT_EN},
@@ -371,7 +371,7 @@ const ITEMS = [
    ing:{tr:['Ekşi maya ekmeği','Sote mantar','Sote ıspanak','Kaşar','Kavrulmuş susam',...SIDE_TR], en:['Sourdough','Sautéed mushrooms','Sautéed spinach','Kashar cheese','Toasted sesame',...SIDE_EN]},
    alg:['gluten','milk','walnut'], diet:['veg']},
 
-  {id:'avokadolu-yumurtali', cat:'eksi-maya', img:null, price:320,
+  {id:'avokadolu-yumurtali', cat:'eksi-maya', img:'avokadolu', price:320,
    name:{tr:'Avokadolu Çırpılmış Yumurtalı', en:'Avocado & Scrambled Eggs'},
    sub:{tr:'Avokado ve çırpılmış yumurta', en:'Avocado and scrambled eggs'},
    about:{tr:'Kızartılmış ekşi maya ekmeği üzeri avokado, çırpılmış yumurta. '+SIDE_ABOUT_TR, en:'Toasted sourdough with avocado and scrambled eggs. '+SIDE_ABOUT_EN},
@@ -422,7 +422,7 @@ const ITEMS = [
    ing:{tr:['Penne','Pesto sos','Krema','Baharatlar'], en:['Penne','Pesto','Cream','Spices']},
    alg:['gluten','nuts','peanut','soy','basil','egg','milk'], diet:['veg']},
 
-  {id:'penne-napoliten', cat:'makarna', img:null, price:320,
+  {id:'penne-napoliten', cat:'makarna', img:'napoliten', price:320,
    name:{tr:'Penne Napoliten', en:'Penne Napoletana'},
    sub:{tr:'Napoliten soslu penne', en:'Penne in tomato sauce'},
    about:{tr:'Napoliten sos, penne ve baharatlar ile servis edilir.', en:'Penne with Napoletana tomato sauce and spices.'},
@@ -473,14 +473,14 @@ const UI = {
       fTitle:'Alerjen filtresi', fHelp:'Kaçınmak istediğiniz alerjenleri seçin. Bunları içeren ürünler soluk görünür ve işaretlenir.',
       active:n=>n+' alerjen filtreleniyor', contains:'İçerir', ingredients:'İçindekiler', allergens:'Alerjenler',
       noAlg:'Listelenen alerjenlerden hiçbirini içermez.', algAsk:'Alerjen bilgisi için lütfen ekibimize danışın.', algAskShort:'Ekibimize danışın', prev:'‹ Önceki', next:'Sonraki ›', close:'Kapat', closeX:'Kapat ✕',
-      algKey:'Alerjen', algNone:'Yok', details:'detaylar'},
+      algKey:'Alerjen', orderNote:'Gıda alerjiniz varsa siparişten önce lütfen ekibimize bildirin.', algNone:'Yok', details:'detaylar'},
   en:{menu:'Menu', allergen:'Allergens', clear:'Clear', done:'Done', top:'Back to top ↑', cats:'Categories',
       vat:'All prices include VAT and are in Turkish lira (₺).',
       allergyNote:'Allergen information follows our recipes. Everything is prepared in one kitchen, so traces may be present. If you have a food allergy, please tell our team before you order.',
       fTitle:'Allergen filter', fHelp:'Select the allergens you avoid. Dishes that contain them are dimmed and marked.',
       active:n=>n+' allergen'+(n>1?'s':'')+' filtered', contains:'Contains', ingredients:'Ingredients', allergens:'Allergens',
       noAlg:'Contains none of the listed allergens.', algAsk:'Please ask our team for allergen information.', algAskShort:'Ask our team', prev:'‹ Previous', next:'Next ›', close:'Close', closeX:'Close ✕',
-      algKey:'Allergens', algNone:'None', details:'details'}
+      algKey:'Allergens', orderNote:'If you have a food allergy, please tell our team before you order.', algNone:'None', details:'details'}
 };
 
 /* ── state ── */
@@ -512,7 +512,7 @@ function card(it, eager){
   const flag = h.length ? `<div class="flag">${esc(t('contains'))}: ${h.map(a=>esc(ALLERGENS[a][L])).join(', ')}</div>` : '';
   return `<article class="item${h.length?' blocked':''}" id="urun-${it.id}">
     <div class="ph${it.img?'':' empty'}">${it.img?`<img src="img/card/${it.img}.jpg" alt="${esc(it.name[L])}" width="540" height="582" ${eager?'':'loading="lazy"'} decoding="async">`:'<span class="mark" aria-hidden="true">neí</span>'}${diet}${flag}</div>
-    <div class="nm"><h3>${esc(it.name[L])}</h3><span class="pr">${it.price}</span></div>
+    <div class="nm"><h3>${esc(it.name[L])}</h3><span class="pr">${it.price} ₺</span></div>
     <div class="sub">${esc(it.sub[L])}</div>
     <div class="ing">${it.ing[L].map(esc).join(' / ')}</div>
     <div class="alg"><span class="k">${esc(t('algKey'))}</span> ${alg}</div>
@@ -584,7 +584,7 @@ function openItem(id){
       <div class="lbl">${esc(t('allergens'))}</div>
       ${chips}
       ${diet}
-      <p class="note">${esc(t('allergyNote'))}</p>
+      <p class="note">${esc(t('orderNote'))}</p>
     </div>
     <div class="d-nav">
       <button type="button" data-step="-1">${esc(t('prev'))}</button>
