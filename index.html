@@ -511,7 +511,7 @@ function card(it, eager){
   const diet = it.diet.length ? `<div class="diet">${it.diet.map(d=>`<span>${esc(DIET[d][L])}</span>`).join('')}</div>` : '';
   const flag = h.length ? `<div class="flag">${esc(t('contains'))}: ${h.map(a=>esc(ALLERGENS[a][L])).join(', ')}</div>` : '';
   return `<article class="item${h.length?' blocked':''}" id="urun-${it.id}">
-    <div class="ph${it.img?'':' empty'}">${it.img?`<img src="img/card/${it.img}.jpg" alt="${esc(it.name[L])}" width="540" height="582" ${eager?'':'loading="lazy"'} decoding="async">`:'<span class="mark" aria-hidden="true">neí</span>'}${diet}${flag}</div>
+    <div class="ph${it.img?'':' empty'}">${it.img?`<img src="${it.img}.jpg" alt="${esc(it.name[L])}" width="540" height="582" ${eager?'':'loading="lazy"'} decoding="async">`:'<span class="mark" aria-hidden="true">neí</span>'}${diet}${flag}</div>
     <div class="nm"><h3>${esc(it.name[L])}</h3><span class="pr">${it.price} ₺</span></div>
     <div class="sub">${esc(it.sub[L])}</div>
     <div class="ing">${it.ing[L].map(esc).join(' / ')}</div>
@@ -574,7 +574,7 @@ function openItem(id){
     : `<div class="none">${esc(t('noAlg'))}</div>`;
   const diet = it.diet.length ? `<div class="chips">${it.diet.map(d=>`<span class="chip solid">${esc(DIET[d][L])}</span>`).join('')}</div>` : '';
   dlg.innerHTML = `<div lang="${L}">
-    <div class="d-ph${it.img?'':' empty'}">${it.img?`<img src="img/full/${it.img}.jpg" alt="${esc(it.name[L])}" width="960" height="1034">`:'<span class="mark" aria-hidden="true">neí</span>'}<button class="x" type="button" data-close>${esc(t('closeX'))}</button></div>
+    <div class="d-ph${it.img?'':' empty'}">${it.img?`<img src="${it.img}.jpg" alt="${esc(it.name[L])}" width="960" height="1034">`:'<span class="mark" aria-hidden="true">neí</span>'}<button class="x" type="button" data-close>${esc(t('closeX'))}</button></div>
     <div class="d-body">
       <div class="d-nm"><h2 id="d-name">${esc(it.name[L])}</h2><span class="pr">${it.price} ₺</span></div>
       <div class="d-sub">${esc(it.sub[L])}</div>
