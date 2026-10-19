@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F9F7F4">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Neí Menü">
+<title>Neí Coffee Menü</title>
+<meta name="description" content="Neí Coffee &amp; Co menüsü: kahvaltı, tost, bowl, salata, sandviç ve makarna. İçindekiler, alerjenler ve fiyatlar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..600&display=swap">
+<style>
+:root{
+  /* Layout: the reference print menu, page for page: top bar, light display title over a short rule, 3-up photo grid (2-up on phones), type-only captions */
+  --paper:#F9F7F4;
+  --ink:#1D1C1A;
+  --ink-soft:#66615B;
+  --rule:#2B2927;
+  --hair:#DDD8D1;
+  --photo:#E8E4DE;
+  --warn:#A13A21;
+  --scrim:rgba(24,22,20,.55);
+  --sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gutter:clamp(20px,7vw,72px);
+  --t-caption:clamp(9.5px,1.05vw,10.5px);
+  --t-name:clamp(14px,1.9vw,18px);
+  --bar-h:50px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.lock,html.lock body{overflow:hidden;overscroll-behavior:none}
+html{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.4;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+button{font:inherit;color:inherit;text-transform:inherit;letter-spacing:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:1.5px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.caps{text-transform:uppercase}
+
+/* top bar — MENU left, house name right, as in the reference */
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-block:clamp(28px,6vw,64px) 0;font-size:clamp(12.5px,1.5vw,15px);letter-spacing:.015em;text-transform:uppercase}
+
+/* sticky category bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--hair);margin-top:clamp(18px,3.4vw,32px)}
+.bar-in{display:flex;align-items:center;gap:18px;height:var(--bar-h)}
+.cats{display:flex;gap:22px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);padding-right:28px}
+.cats::-webkit-scrollbar{display:none}
+.cats a{flex:none;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;padding-block:14px 13px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.cats a:hover{color:var(--ink)}
+.cats a[aria-current="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.cats{-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.cats a{scroll-snap-align:start}
+.ctl{display:flex;align-items:center;gap:16px;flex:none;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase}
+.fbtn{display:flex;align-items:center;gap:6px;padding-block:14px;min-height:44px}
+.fbtn .n{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;background:var(--warn);color:var(--paper);font-size:10px;letter-spacing:0;font-variant-numeric:tabular-nums}
+.lang{display:flex;align-items:center;gap:5px;color:var(--ink-soft)}
+.lang button{padding:14px 4px;min-height:44px;color:var(--ink-soft)}
+.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.fstrip{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--hair);padding-block:9px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--warn)}
+.fstrip button{text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
+
+/* sections — big light title, short rule, grid */
+.sec{padding-top:clamp(52px,9vw,104px)}
+.sec h2{scroll-margin-top:calc(var(--bar-h) + env(safe-area-inset-top,0px) + clamp(24px,4vw,40px))}
+.sec h2{margin:0;font-weight:340;font-size:clamp(46px,10.6vw,100px);line-height:.9;letter-spacing:-.018em;text-transform:uppercase;text-wrap:balance;width:max-content;max-width:100%;min-width:min(100%,47%);padding-bottom:clamp(14px,2.2vw,24px);border-bottom:1px solid var(--rule)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 14px;margin-top:clamp(36px,7vw,80px)}
+@media (min-width:720px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:52px clamp(18px,2.8vw,28px)}}
+@media (max-width:340px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+/* card */
+.item{position:relative;display:flex;flex-direction:column;min-width:0}
+.ph{position:relative;aspect-ratio:182/196;max-width:100%;background:var(--photo);overflow:hidden}
+.ph.empty,.d-ph.empty{display:grid;place-items:center;background:var(--photo)}
+.mark{font-weight:300;font-size:clamp(28px,6vw,44px);letter-spacing:-.02em;color:var(--ink-soft);opacity:.55}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .3s,filter .3s}
+.item:hover .ph img{transform:scale(1.03)}
+.diet{position:absolute;left:8px;bottom:8px;display:flex;gap:4px;flex-wrap:wrap}
+.diet span{background:var(--paper);color:var(--ink);font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:4px 6px 3px;line-height:1}
+.flag{position:absolute;left:8px;top:8px;background:var(--warn);color:var(--paper);font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:4px 6px 3px;line-height:1.2;max-width:calc(100% - 16px)}
+.nm{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:14px}
+.nm h3{margin:0;font-size:var(--t-name);font-weight:400;line-height:1.15;text-transform:uppercase;min-width:0;overflow-wrap:anywhere}
+.pr{flex:none;font-size:var(--t-name);font-variant-numeric:tabular-nums}
+.sub{margin-top:7px;font-size:var(--t-caption);letter-spacing:.025em;line-height:1.35;text-transform:uppercase}
+.ing{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-size:var(--t-caption);letter-spacing:.025em;line-height:1.5;text-transform:uppercase}
+.alg{margin-top:9px;font-size:var(--t-caption);letter-spacing:.025em;line-height:1.5;text-transform:uppercase;color:var(--ink-soft)}
+.alg .k{color:var(--ink);margin-right:4px}
+.alg .hit{color:var(--warn);text-decoration:underline;text-underline-offset:2px}
+.open{position:absolute;inset:0;z-index:1}
+.open:focus-visible{outline-offset:6px}
+.item.blocked .ph img{opacity:.42;filter:grayscale(1)}
+.item.blocked .nm,.item.blocked .sub,.item.blocked .ing{opacity:.5}
+
+/* footer */
+.foot{margin-top:clamp(72px,12vw,128px);padding-block:22px clamp(32px,6vw,56px);border-top:1px solid var(--rule)}
+.foot-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:clamp(12.5px,1.5vw,15px);letter-spacing:.015em;text-transform:uppercase}
+.foot-top a{color:inherit;text-decoration:none;font-size:11.5px;letter-spacing:.07em}
+.foot p{max-width:62ch;margin:16px 0 0;font-size:12.5px;line-height:1.6;color:var(--ink-soft)}
+
+/* dialogs — square sheet, bottom-anchored on phones */
+dialog{padding:0;border:0;background:var(--paper);color:var(--ink);width:min(560px,calc(100% - 48px));max-width:none;max-height:min(90vh,920px);max-height:min(90dvh,920px);overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+dialog.fallback{position:fixed;inset:0;margin:auto;z-index:50;box-shadow:0 0 0 100vmax var(--scrim)}
+dialog::backdrop{background:var(--scrim)}
+@media (max-width:719px){
+  dialog{width:100%;margin:auto 0 0;max-height:92vh;max-height:92dvh;padding-bottom:env(safe-area-inset-bottom,0px)}
+  dialog.fallback{top:auto;bottom:0;margin:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  dialog[open]{animation:rise .32s cubic-bezier(.2,.8,.2,1)}
+  @keyframes rise{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+}
+.d-ph{position:relative;aspect-ratio:6/5;background:var(--photo);overflow:hidden}
+.d-ph img{display:block;width:100%;height:100%;object-fit:cover}
+.x{position:absolute;top:12px;right:12px;z-index:2;background:var(--paper);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;padding:8px 10px 7px;line-height:1}
+.d-body{padding:22px clamp(20px,5vw,32px) 8px}
+.d-nm{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.d-nm h2{margin:0;font-size:clamp(22px,4.6vw,28px);font-weight:400;line-height:1.1;text-transform:uppercase;text-wrap:balance}
+.d-nm .pr{font-size:clamp(22px,4.6vw,28px)}
+.d-sub{margin-top:8px;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.d-about{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--rule);font-size:15px;line-height:1.55;color:var(--ink);max-width:60ch}
+.lbl{margin-top:24px;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.d-ing{margin-top:8px;font-size:12px;letter-spacing:.03em;line-height:1.65;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{border:1px solid var(--rule);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 8px 5px;line-height:1}
+.chip.hit{background:var(--warn);border-color:var(--warn);color:var(--paper)}
+.chip.solid{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.none{margin-top:8px;font-size:12.5px;color:var(--ink-soft)}
+.note{margin:22px 0 0;font-size:12px;line-height:1.55;color:var(--ink-soft)}
+.d-nav{display:grid;grid-template-columns:1fr auto 1fr;margin-top:26px;border-top:1px solid var(--hair);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.d-nav button{padding:16px clamp(20px,5vw,32px)}
+.d-nav button:first-child{text-align:left}
+.d-nav button:last-child{text-align:right}
+
+/* allergen filter sheet */
+.f-body{padding:26px clamp(20px,5vw,32px) 0}
+.f-body h2{margin:0;font-size:clamp(26px,5.4vw,34px);font-weight:340;letter-spacing:-.01em;line-height:1;text-transform:uppercase;padding-bottom:14px;border-bottom:1px solid var(--rule);width:max-content;max-width:100%;min-width:60%}
+.f-body p{margin:14px 0 0;font-size:13.5px;line-height:1.55;color:var(--ink-soft);max-width:52ch}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;margin-top:18px}
+.opt{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--hair);font-size:12px;letter-spacing:.05em;text-transform:uppercase;text-align:left;min-width:0}
+.box{flex:none;width:15px;height:15px;border:1px solid var(--rule);display:grid;place-items:center}
+.opt[aria-pressed="true"] .box{background:var(--warn);border-color:var(--warn)}
+.opt[aria-pressed="true"] .box::after{content:"";width:7px;height:4px;border:solid var(--paper);border-width:0 0 1.5px 1.5px;transform:translateY(-1px) rotate(-45deg)}
+.f-act{display:flex;gap:10px;padding:22px clamp(20px,5vw,32px) 26px}
+.f-act button{flex:1;padding:14px 12px 13px;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ink)}
+.f-act .go{background:var(--ink);color:var(--paper)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div id="app" lang="tr" translate="no">
+  <div class="wrap">
+    <header class="top">
+      <span data-t="menu">Menü</span>
+      <span>Neí Coffee &amp; Co</span>
+    </header>
+  </div>
+
+  <nav class="bar" aria-label="Kategoriler">
+    <div class="wrap">
+      <div class="bar-in">
+        <div class="cats" id="cats"></div>
+        <div class="ctl">
+          <button class="fbtn" id="fbtn" type="button" aria-haspopup="dialog"><span data-t="allergen">Alerjen</span><span class="n" id="fcount" hidden>0</span></button>
+          <div class="lang" role="group" aria-label="Dil / Language">
+            <button type="button" id="lang-tr" aria-pressed="true">TR</button><span aria-hidden="true">/</span><button type="button" id="lang-en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+      </div>
+      <div class="fstrip" id="fstrip" hidden>
+        <span id="fstrip-txt"></span>
+        <button type="button" id="fstrip-clear" data-t="clear">Temizle</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap" id="menu"></main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <div class="foot-top">
+        <span>Neí Coffee &amp; Co</span>
+        <a href="#app" id="totop" data-t="top">Başa dön ↑</a>
+      </div>
+      <p data-t="vat">Fiyatlarımıza KDV dahildir. Tüm fiyatlar Türk lirası (₺) cinsindendir.</p>
+      <p data-t="allergyNote">Alerjen bilgileri tariflerimize göre hazırlanmıştır. Tüm ürünler aynı mutfakta hazırlandığından eser miktarda çapraz bulaşma olabilir. Gıda alerjiniz varsa siparişten önce lütfen ekibimize bildirin.</p>
+    </div>
+  </footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="d-name"></dialog>
+<dialog id="fdlg" aria-labelledby="f-title"></dialog>
+
+<script>
+/* ───────────────────────────────────────────────────────────
+   MENÜ VERİSİ — fiyat, içerik ve alerjenleri buradan düzenleyin.
+   price: TL (₺)    alg: aşağıdaki ALLERGENS anahtarları
+   diet: 'veg' (vejetaryen) · 'vegan' · 'spicy' (acılı)
+   ─────────────────────────────────────────────────────────── */
+const CATS = [
+  {id:'tost',     tr:'Tost',      en:'Toasties'},
+  {id:'kahvalti', tr:'Kahvaltı',  en:'Breakfast'},
+  {id:'bowl',     tr:'Bowl',      en:'Bowls'},
+  {id:'eksi-maya',tr:'Ekşi Maya', en:'Sourdough'},
+  {id:'salata',   tr:'Salata',    en:'Salads'},
+  {id:'makarna',  tr:'Makarna',   en:'Pasta'},
+  {id:'sandvic',  tr:'Sandviç',   en:'Sandwiches'}
+];
+
+/* Alerjen etiketleri — menüdeki ifadelerle birebir */
+const ALLERGENS = {
+  gluten:    {tr:'Gluten',                 en:'Gluten'},
+  milk:      {tr:'Süt ve süt ürünleri',    en:'Milk & dairy'},
+  egg:       {tr:'Yumurta',                en:'Eggs'},
+  walnut:    {tr:'Ceviz',                  en:'Walnut'},
+  hazelnut:  {tr:'Fındık',                 en:'Hazelnut'},
+  almond:    {tr:'Badem',                  en:'Almond'},
+  pistachio: {tr:'Antep fıstığı',          en:'Pistachio'},
+  nuts:      {tr:'Sert kabuklu meyveler',  en:'Tree nuts'},
+  peanut:    {tr:'Yer fıstığı',            en:'Peanuts'},
+  sesame:    {tr:'Susam',                  en:'Sesame'},
+  soy:       {tr:'Soya',                   en:'Soy'},
+  mustard:   {tr:'Hardal',                 en:'Mustard'},
+  celery:    {tr:'Kereviz',                en:'Celery'},
+  sulphite:  {tr:'Sülfitler',              en:'Sulphites'},
+  tuna:      {tr:'Ton balığı',             en:'Tuna (fish)'},
+  strawberry:{tr:'Çilek',                  en:'Strawberry'},
+  tomato:    {tr:'Domates',                en:'Tomato'},
+  lemon:     {tr:'Limon',                  en:'Lemon'},
+  corn:      {tr:'Mısır',                  en:'Corn'},
+  mushroom:  {tr:'Mantar',                 en:'Mushroom'},
+  basil:     {tr:'Fesleğen',               en:'Basil'},
+  spices:    {tr:'Baharatlar',             en:'Spices'}
+};
+
+const DIET = {veg:{tr:'Vejetaryen',en:'Vegetarian'}, spicy:{tr:'Acılı',en:'Spicy'}};
+
+const SIDE_TR = ['Fesleğenli baby patates','Mevsim salatası','Nar ekşisi','Ceviz'];
+const SIDE_EN = ['Basil baby potatoes','Seasonal salad','Pomegranate molasses','Walnuts'];
+const SIDE_ABOUT_TR = 'Yanında fesleğenle harmanlanmış baby patates ve nar ekşisinin tatlı-ekşi dokunuşunu cevizle tamamlayan mevsim salatası.';
+const SIDE_ABOUT_EN = 'Served with basil baby potatoes and a seasonal salad with walnuts and a sweet-sour touch of pomegranate molasses.';
+
+const ITEMS = [
+  /* ── TOST ── */
+  {id:'kasarli-tost', cat:'tost', img:'dsc04216', price:300,
+   name:{tr:'Kaşarlı Tost', en:'Kashar Toastie'},
+   sub:{tr:'Ekşi maya ekmeğinde kaşar', en:'Kashar cheese on sourdough'},
+   about:{tr:'Çıtır ekşi maya ekmeği arasında kaşarlı tost. '+SIDE_ABOUT_TR, en:'Kashar cheese toastie in crisp sourdough. '+SIDE_ABOUT_EN},
+   ing:{tr:['Ekşi maya ekmeği','Kaşar',...SIDE_TR], en:['Sourdough','Kashar cheese',...SIDE_EN]},
+   alg:['gluten','milk','walnut'], diet:['veg']},
+
+  {id:'kavurmali-tost', cat:'tost', img:'dsc04183', price:380,
+   name:{tr:'Kavurmalı Tost', en:'Kavurma Toastie'},
+   sub:{tr:'Kavurma ve erimiş kaşar', en:'Braised beef and melted kashar'},
+   about:{tr:'Çıtır ekşi maya ekmeği arasında kavurma ve erimiş kaşarlı tost. '+SIDE_ABOUT_TR, en:'Crisp sourdough toastie with kavurma (braised beef) and melted kashar. '+SIDE_ABOUT_EN},
+   ing:{tr:['Ekşi maya ekmeği','Kavurma','Kaşar',...SIDE_TR], en:['Sourdough','Kavurma','Kashar cheese',...SIDE_EN]},
+   alg:['gluten','milk','walnut'], diet:[]},
+
+  {id:'dort-peynirli-tost', cat:'tost', img:'dsc04205', price:320,
+   name:{tr:'4 Peynirli Tost', en:'Four Cheese Toastie'},
+   sub:{tr:'Tulum, labne, kaşar ve beyaz peynir', en:'Tulum, labneh, kashar and white cheese'},
+   about:{tr:'Çıtır ekşi maya ekmeği arasında İzmir tulum peyniri, labne, kaşar ve beyaz peynirin uyumu. '+SIDE_ABOUT_TR, en:'Crisp sourdough with İzmir tulum cheese, labneh, kashar and white cheese. '+SIDE_ABOUT_EN},
+   ing:{tr:['Ekşi maya ekmeği','İzmir tulum peyniri','Labne','Kaşar','Beyaz peynir',...SIDE_TR], en:['Sourdough','İzmir tulum cheese','Labneh','Kashar cheese','White cheese',...SIDE_EN]},
+   alg:['gluten','milk','walnut'], diet:['veg']},
+
+  /* ── KAHVALTI ── */
+  {id:'croi-breakfast', cat:'kahvalti', img:'dsc04174', price:600,
+   name:{tr:'Croi Breakfast', en:'Croi Breakfast'},
+   sub:{tr:'Kruvasanlı kahvaltı tabağı', en:'Croissant breakfast plate'},
+   about:{tr:'Kızartılmış taze kruvasan, göz yumurta, dana jambon, İzmir tulum peyniri ve top peynir. Siyah zeytin, mevsim meyveleri, bal & kaymak, Nutella, mantar sote, domates ve salatalıkla harmanlanmış mevsim salatası.',
+          en:'Toasted fresh croissant, fried egg, beef ham, İzmir tulum cheese and cheese balls. Black olives, seasonal fruit, honey & clotted cream, Nutella, sautéed mushrooms and a seasonal salad with tomato and cucumber.'},
+   ing:{tr:['Kızartılmış kruvasan','Göz yumurta','Dana jambon','İzmir tulum peyniri','Top peynir','Siyah zeytin','Mevsim meyveleri','Bal & kaymak','Nutella','Mantar sote','Mevsim salatası'],
+        en:['Toasted croissant','Fried egg','Beef ham','İzmir tulum cheese','Cheese balls','Black olives','Seasonal fruit','Honey & clotted cream','Nutella','Sautéed mushrooms','Seasonal salad']},
+   alg:['gluten','egg','milk','hazelnut'], diet:[]},
+
+  {id:'single-breakfast', cat:'kahvalti', img:'dsc04170', price:450,
+   name:{tr:'Single Breakfast', en:'Single Breakfast'},
+   sub:{tr:'Tek kişilik kahvaltı', en:'Breakfast for one'},
+   about:{tr:'Taze kruvasan, İzmir tulum peyniri eşliğinde dana jambon. Göz yumurta, mevsim meyvesi, siyah zeytin, reçel ve Nutella.',
+          en:'Fresh croissant with İzmir tulum cheese and beef ham. Fried egg, seasonal fruit, black olives, jam and Nutella.'},
+   ing:{tr:['Taze kruvasan','İzmir tulum peyniri','Dana jambon','Göz yumurta','Mevsim meyvesi','Siyah zeytin','Reçel','Nutella'],
+        en:['Fresh croissant','İzmir tulum cheese','Beef ham','Fried egg','Seasonal fruit','Black olives','Jam','Nutella']},
+   alg:['gluten','egg','milk','hazelnut'], diet:[]},
+
+  {id:'dereotlu-omlet', cat:'kahvalti', img:'dsc04061', price:310,
+   name:{tr:'Dereotlu & İzmir Tulum Peynirli Omlet', en:'Dill & Tulum Cheese Omelette'},
+   sub:{tr:'Dereotu ve tulum peynirli omlet', en:'Omelette with dill and tulum cheese'},
+   about:{tr:'Çırpılmış yumurta arasında taze dereotu ve İzmir tulum peynirli omlet. '+SIDE_ABOUT_TR, en:'Omelette with fresh dill and İzmir tulum cheese. '+SIDE_ABOUT_EN},
+   ing:{tr:['Çırpılmış yumurta','Taze dereotu','İzmir tulum peyniri',...SIDE_TR], en:['Whisked eggs','Fresh dill','İzmir tulum cheese',...SIDE_EN]},
+   alg:['gluten','milk','walnut'], diet:['veg']},
+
+  {id:'sade-omlet', cat:'kahvalti', img:null, price:260,
+   name:{tr:'Sade Omlet', en:'Plain Omelette'},
+   sub:{tr:'Klasik omlet', en:'Classic omelette'},
+   about:{tr:'Çırpılmış yumurta ile hazırlanmış omlet. '+SIDE_ABOUT_TR, en:'Omelette made with whisked eggs. '+SIDE_ABOUT_EN},
+   ing:{tr:['Çırpılmış yumurta',...SIDE_TR], en:['Whisked eggs',...SIDE_EN]},
+   alg:['egg','walnut'], diet:['veg']},
+
+  {id:'pancake-tabagi', cat:'kahvalti', img:'dsc04099', price:400,
+   name:{tr:'Pancake Tabağı', en:'Pancake Plate'},
+   sub:{tr:'Taze meyve ve Nutella ile', en:'With fresh fruit and Nutella'},
+   about:{tr:'Ev yapımı pancake yanında taze muz, çilek, yaban mersini ve Nutella ile servis edilir.', en:'Homemade pancakes served with fresh banana, strawberries, blueberries and Nutella.'},
+   ing:{tr:['Ev yapımı pancake','Muz','Çilek','Yaban mersini','Nutella'], en:['Homemade pancakes','Banana','Strawberries','Blueberries','Nutella']},
+   alg:['gluten','egg','hazelnut','strawberry','pistachio','milk'], diet:['veg']},
+
+  /* ── BOWL ── */
+  {id:'egg-bowl', cat:'bowl', img:'dsc04143', price:500,
+   name:{tr:'Egg Bowl', en:'Egg Bowl'},
+   sub:{tr:'Yoğurt yatağında poşe yumurta', en:'Poached eggs on yoghurt'},
+   about:{tr:'Süzme yoğurt yatağında poşe yumurta ve kızartılmış domates parçaları, tereyağında yakılmış pul biber, frenk soğanı ve kızartılmış taze kruvasan.',
+          en:'Poached eggs and roasted tomatoes on strained yoghurt, chilli flakes in browned butter, chives and toasted fresh croissant.'},
+   ing:{tr:['Süzme yoğurt','Poşe yumurta','Kızartılmış domates','Pul biberli tereyağı','Frenk soğanı','Kızartılmış kruvasan'],
+        en:['Strained yoghurt','Poached eggs','Roasted tomatoes','Chilli butter','Chives','Toasted croissant']},
+   alg:['gluten','egg','milk'], diet:['veg']},
+
+  {id:'sebze-bowl', cat:'bowl', img:'dsc04089', price:440,
+   name:{tr:'Sebze Bowl', en:'Veggie Bowl'},
+   sub:{tr:'Mücver, avokado ve maş fasulyesi', en:'Courgette fritters, avocado and mung beans'},
+   about:{tr:'Süzme yoğurt üzerinde Akdeniz yeşillikleri, maş fasulyesi, kabak mücver, avokado ve yanında kızartılmış taze kruvasan eşlikçisi bowl.',
+          en:'Mediterranean greens, mung beans, courgette fritters and avocado on strained yoghurt, with toasted fresh croissant on the side.'},
+   ing:{tr:['Süzme yoğurt','Akdeniz yeşillikleri','Maş fasulyesi','Kabak mücver','Avokado','Kızartılmış kruvasan'],
+        en:['Strained yoghurt','Mediterranean greens','Mung beans','Courgette fritters','Avocado','Toasted croissant']},
+   alg:['gluten','egg','milk','walnut'], diet:['veg']},
+
+  {id:'meyve-bowl', cat:'bowl', img:'dsc03672', price:440,
+   name:{tr:'Meyve Bowl', en:'Fruit Bowl'},
+   sub:{tr:'Yoğurt, yulaf ve taze meyve', en:'Yoghurt, oats and fresh fruit'},
+   about:{tr:'Süzme yoğurt, yulaf, chia ve yaban mersini ile hazırlanmış taban üzerine muz, çilek, böğürtlen, yaban mersini, keten tohumu, ceviz ve granola ile hazırlanmış bowl.',
+          en:'A base of strained yoghurt, oats, chia and blueberries topped with banana, strawberries, blackberries, blueberries, flaxseed, walnuts and granola.'},
+   ing:{tr:['Süzme yoğurt','Yulaf','Chia','Muz','Çilek','Böğürtlen','Yaban mersini','Keten tohumu','Ceviz','Granola'],
+        en:['Strained yoghurt','Oats','Chia','Banana','Strawberries','Blackberries','Blueberries','Flaxseed','Walnuts','Granola']},
+   alg:['gluten','milk','walnut','almond','hazelnut'], diet:['veg']},
+
+  {id:'kofte-bowl', cat:'bowl', img:'dsc04070', price:500,
+   name:{tr:'Köfte Bowl', en:'Köfte Bowl'},
+   sub:{tr:'Yasemin pirinç yatağında köfte', en:'Köfte on jasmine rice'},
+   about:{tr:'Yasemin pirinç yatağında ızgara köfte, közlenmiş kırmızı biber, confit çeri domates, mor lahana coleslaw ile hazırlanmış bowl.',
+          en:'Grilled köfte on jasmine rice with roasted red pepper, confit cherry tomatoes and red cabbage coleslaw.'},
+   ing:{tr:['Yasemin pirinç','Izgara köfte','Közlenmiş kırmızı biber','Confit çeri domates','Mor lahana coleslaw'],
+        en:['Jasmine rice','Grilled köfte','Roasted red pepper','Confit cherry tomatoes','Red cabbage coleslaw']},
+   alg:null, diet:[]},
+
+  {id:'tavuk-bowl', cat:'bowl', img:'dsc04035', price:450,
+   name:{tr:'Tavuk Bowl', en:'Chicken Bowl'},
+   sub:{tr:'Yasemin pirinç yatağında tavuk', en:'Chicken on jasmine rice'},
+   about:{tr:'Yasemin pirinç yatağında ızgara tavuk, mevsim yeşillikleri, çeri domates, haşlanmış mısır ile hazırlanmış üzeri susamlı bowl.',
+          en:'Grilled chicken on jasmine rice with seasonal greens, cherry tomatoes and boiled corn, topped with sesame.'},
+   ing:{tr:['Yasemin pirinç','Izgara tavuk','Mevsim yeşillikleri','Çeri domates','Haşlanmış mısır','Susam'],
+        en:['Jasmine rice','Grilled chicken','Seasonal greens','Cherry tomatoes','Boiled corn','Sesame']},
+   alg:['sesame'], diet:[]},
+
+  /* ── EKŞİ MAYA ── */
+  {id:'carprese', cat:'eksi-maya', img:'dsc04027', price:400,
+   name:{tr:'Carprese', en:'Carprese'},
+   sub:{tr:'Pesto, mozzarella ve çeri domates', en:'Pesto, mozzarella and cherry tomatoes'},
+   about:{tr:'Kızartılmış ekşi maya ekmek üzeri pesto sos, suda mozzarella, taze fesleğen, çeri domates. '+SIDE_ABOUT_TR, en:'Toasted sourdough with pesto, fresh mozzarella, basil and cherry tomatoes. '+SIDE_ABOUT_EN},
+   ing:{tr:['Ekşi maya ekmek','Pesto sos','Suda mozzarella','Taze fesleğen','Çeri domates',...SIDE_TR], en:['Sourdough','Pesto','Fresh mozzarella','Fresh basil','Cherry tomatoes',...SIDE_EN]},
+   alg:['gluten','milk','walnut'], diet:['veg']},
+
+  {id:'mantarli-ispanakli', cat:'eksi-maya', img:'dsc04014', price:400,
+   name:{tr:'Mantarlı & Ispanaklı', en:'Mushroom & Spinach'},
+   sub:{tr:'Sote mantar, ıspanak ve kaşar', en:'Sautéed mushrooms, spinach and kashar'},
+   about:{tr:'Kızartılmış ekşi maya ekmeği üzeri sote mantar, sote ıspanak, kaşar ve kavrulmuş susam. '+SIDE_ABOUT_TR, en:'Toasted sourdough with sautéed mushrooms, sautéed spinach, kashar and toasted sesame. '+SIDE_ABOUT_EN},
+   ing:{tr:['Ekşi maya ekmeği','Sote mantar','Sote ıspanak','Kaşar','Kavrulmuş susam',...SIDE_TR], en:['Sourdough','Sautéed mushrooms','Sautéed spinach','Kashar cheese','Toasted sesame',...SIDE_EN]},
+   alg:['gluten','milk','walnut'], diet:['veg']},
+
+  {id:'avokadolu-yumurtali', cat:'eksi-maya', img:null, price:320,
+   name:{tr:'Avokadolu Çırpılmış Yumurtalı', en:'Avocado & Scrambled Eggs'},
+   sub:{tr:'Avokado ve çırpılmış yumurta', en:'Avocado and scrambled eggs'},
+   about:{tr:'Kızartılmış ekşi maya ekmeği üzeri avokado, çırpılmış yumurta. '+SIDE_ABOUT_TR, en:'Toasted sourdough with avocado and scrambled eggs. '+SIDE_ABOUT_EN},
+   ing:{tr:['Ekşi maya ekmeği','Avokado','Çırpılmış yumurta',...SIDE_TR], en:['Sourdough','Avocado','Scrambled eggs',...SIDE_EN]},
+   alg:['gluten','egg','walnut'], diet:['veg']},
+
+  /* ── SALATA ── */
+  {id:'ton-balikli-salata', cat:'salata', img:'dsc05578', price:320,
+   name:{tr:'Ton Balıklı Salata', en:'Tuna Salad'},
+   sub:{tr:'Ton balığı, mısır ve kruton', en:'Tuna, corn and croutons'},
+   about:{tr:'Ton balığı, yeşillikler, mısır, havuç, salatalık, kruton, limon ve domates ile servis edilir.', en:'Tuna, greens, corn, carrot, cucumber and croutons, served with lemon and tomato.'},
+   ing:{tr:['Ton balığı','Yeşillikler','Mısır','Havuç','Salatalık','Kruton','Limon','Domates'], en:['Tuna','Greens','Corn','Carrot','Cucumber','Croutons','Lemon','Tomato']},
+   alg:['gluten','tuna','tomato','lemon','egg','corn','sulphite','milk'], diet:[]},
+
+  {id:'sezar-salata', cat:'salata', img:'dsc05637', price:340,
+   name:{tr:'Sezar Salata', en:'Caesar Salad'},
+   sub:{tr:'Izgara tavuk ve sezar sos', en:'Grilled chicken and Caesar dressing'},
+   about:{tr:'Izgara tavuk, sezar sos, iceberg, domates, salatalık, mısır, mor soğan turşusu ve havuç ile servis edilir.', en:'Grilled chicken, Caesar dressing, iceberg, tomato, cucumber, corn, pickled red onion and carrot.'},
+   ing:{tr:['Izgara tavuk','Sezar sos','Iceberg','Domates','Salatalık','Mısır','Mor soğan turşusu','Havuç'], en:['Grilled chicken','Caesar dressing','Iceberg','Tomato','Cucumber','Corn','Pickled red onion','Carrot']},
+   alg:['gluten','celery','egg','mustard','sulphite','milk'], diet:[]},
+
+  {id:'hellim-salata', cat:'salata', img:'dsc05618', price:300,
+   name:{tr:'Hellim Salata', en:'Halloumi Salad'},
+   sub:{tr:'Hellim peyniri ve portakal', en:'Halloumi and orange'},
+   about:{tr:'Hellim peyniri, yeşillikler, portakal, havuç, salatalık ve domates ile servis edilir.', en:'Halloumi, greens, orange, carrot, cucumber and tomato.'},
+   ing:{tr:['Hellim peyniri','Yeşillikler','Portakal','Havuç','Salatalık','Domates'], en:['Halloumi','Greens','Orange','Carrot','Cucumber','Tomato']},
+   alg:['gluten','egg','sesame','mustard','sulphite','milk'], diet:['veg']},
+
+  /* ── MAKARNA ── */
+  {id:'spagetti-bolonez', cat:'makarna', img:'dsc05673', price:420,
+   name:{tr:'Spagetti Bolonez', en:'Spaghetti Bolognese'},
+   sub:{tr:'Bolonez soslu spagetti', en:'Spaghetti with Bolognese sauce'},
+   about:{tr:'Bolonez sos, spagetti ve baharatlar ile servis edilir.', en:'Spaghetti with Bolognese sauce and spices.'},
+   ing:{tr:['Spagetti','Bolonez sos','Baharatlar'], en:['Spaghetti','Bolognese sauce','Spices']},
+   alg:['gluten','egg','celery','sulphite','milk'], diet:[]},
+
+  {id:'penne-arabiata', cat:'makarna', img:'dsc05680', price:320,
+   name:{tr:'Penne Arabiata', en:'Penne Arrabbiata'},
+   sub:{tr:'Acı soslu penne', en:'Penne in spicy sauce'},
+   about:{tr:'Acı sos, pul biber, penne, baharatlar ve napoliten sos ile servis edilir.', en:'Penne with spicy sauce, chilli flakes, spices and Napoletana sauce.'},
+   ing:{tr:['Penne','Acı sos','Pul biber','Napoliten sos','Baharatlar'], en:['Penne','Spicy sauce','Chilli flakes','Napoletana sauce','Spices']},
+   alg:['gluten','egg','celery','sulphite','milk'], diet:['veg','spicy']},
+
+  {id:'pesto-penne', cat:'makarna', img:'dsc05656', price:340,
+   name:{tr:'Pesto Penne', en:'Pesto Penne'},
+   sub:{tr:'Kremalı pesto sos', en:'Creamy pesto sauce'},
+   about:{tr:'Pesto sos, krema, penne ve baharatlar ile servis edilir.', en:'Penne with pesto, cream and spices.'},
+   ing:{tr:['Penne','Pesto sos','Krema','Baharatlar'], en:['Penne','Pesto','Cream','Spices']},
+   alg:['gluten','nuts','peanut','soy','basil','egg','milk'], diet:['veg']},
+
+  {id:'penne-napoliten', cat:'makarna', img:null, price:320,
+   name:{tr:'Penne Napoliten', en:'Penne Napoletana'},
+   sub:{tr:'Napoliten soslu penne', en:'Penne in tomato sauce'},
+   about:{tr:'Napoliten sos, penne ve baharatlar ile servis edilir.', en:'Penne with Napoletana tomato sauce and spices.'},
+   ing:{tr:['Penne','Napoliten sos','Baharatlar'], en:['Penne','Napoletana sauce','Spices']},
+   alg:['gluten','egg','celery','sulphite','milk'], diet:['veg']},
+
+  {id:'fettucini-tavuklu-mantarli', cat:'makarna', img:'dsc05667', price:390,
+   name:{tr:'Fettucini Tavuklu Mantarlı', en:'Chicken & Mushroom Fettuccine'},
+   sub:{tr:'Tavuk, mantar ve krema', en:'Chicken, mushrooms and cream'},
+   about:{tr:'Tavuk, mantar, krema, fettucine ve baharatlar ile servis edilir.', en:'Fettuccine with chicken, mushrooms, cream and spices.'},
+   ing:{tr:['Fettucine','Tavuk','Mantar','Krema','Baharatlar'], en:['Fettuccine','Chicken','Mushrooms','Cream','Spices']},
+   alg:['gluten','egg','celery','mushroom','sulphite','milk'], diet:[]},
+
+  /* ── SANDVİÇ ── */
+  {id:'ton-balikli-sandvic', cat:'sandvic', img:'dsc05651', price:320,
+   name:{tr:'Ton Balıklı Sandviç', en:'Tuna Sandwich'},
+   sub:{tr:'Tarator sos, ton balığı ve roka', en:'Tarator sauce, tuna and rocket'},
+   about:{tr:'Tarator sos, ton balığı, mısır, roka; yanına baby patates, kornişon turşu ve soğan turşusu ile servis edilir.', en:'Tarator sauce, tuna, corn and rocket; served with baby potatoes, gherkins and pickled onion.'},
+   ing:{tr:['Tarator sos','Ton balığı','Mısır','Roka','Baby patates','Kornişon turşu','Soğan turşusu'], en:['Tarator sauce','Tuna','Corn','Rocket','Baby potatoes','Gherkins','Pickled onion']},
+   alg:['tuna','egg','mustard','sulphite','milk'], diet:[]},
+
+  {id:'tavuklu-sandvic', cat:'sandvic', img:'dsc05645', price:340,
+   name:{tr:'Tavuklu Sandviç', en:'Chicken Sandwich'},
+   sub:{tr:'Kremalı tavuk ve marul', en:'Creamy chicken and lettuce'},
+   about:{tr:'Krema, baharatlar, marul ve tavuk; yanına baby patates ve yeşillik ile servis edilir.', en:'Chicken with cream, spices and lettuce; served with baby potatoes and greens.'},
+   ing:{tr:['Tavuk','Krema','Baharatlar','Marul','Baby patates','Yeşillik'], en:['Chicken','Cream','Spices','Lettuce','Baby potatoes','Greens']},
+   alg:['spices','egg','sulphite','milk'], diet:[]},
+
+  {id:'steak-sandvic', cat:'sandvic', img:'dsc05648', price:590,
+   name:{tr:'Steak Sandviç', en:'Steak Sandwich'},
+   sub:{tr:'Bonfile ve sotelenmiş biber', en:'Beef tenderloin and sautéed peppers'},
+   about:{tr:'Bonfile, sotelenmiş biberler; yanına baby patates ve yeşillik ile servis edilir.', en:'Beef tenderloin and sautéed peppers; served with baby potatoes and greens.'},
+   ing:{tr:['Bonfile','Sotelenmiş biberler','Baby patates','Yeşillik'], en:['Beef tenderloin','Sautéed peppers','Baby potatoes','Greens']},
+   alg:['egg','sulphite','mustard','soy','milk'], diet:[]},
+
+  {id:'hellim-sandvic', cat:'sandvic', img:'dsc05654', price:320,
+   name:{tr:'Hellim Sandviç', en:'Halloumi Sandwich'},
+   sub:{tr:'Izgara hellim ve kuru domatesli sos', en:'Grilled halloumi and sun-dried tomato sauce'},
+   about:{tr:'Izgara hellim peyniri, kuru domatesli sos, roka; yanına yeşillik ve baby patates ile servis edilir.', en:'Grilled halloumi, sun-dried tomato sauce and rocket; served with greens and baby potatoes.'},
+   ing:{tr:['Izgara hellim peyniri','Kuru domatesli sos','Roka','Yeşillik','Baby patates'], en:['Grilled halloumi','Sun-dried tomato sauce','Rocket','Greens','Baby potatoes']},
+   alg:['egg','sulphite','mustard','soy','milk'], diet:['veg']}
+];
+
+const UI = {
+  tr:{menu:'Menü', allergen:'Alerjen', clear:'Temizle', done:'Tamam', top:'Başa dön ↑', cats:'Kategoriler',
+      vat:'Fiyatlarımıza KDV dahildir. Tüm fiyatlar Türk lirası (₺) cinsindendir.',
+      allergyNote:'Alerjen bilgileri tariflerimize göre hazırlanmıştır. Tüm ürünler aynı mutfakta hazırlandığından eser miktarda çapraz bulaşma olabilir. Gıda alerjiniz varsa siparişten önce lütfen ekibimize bildirin.',
+      fTitle:'Alerjen filtresi', fHelp:'Kaçınmak istediğiniz alerjenleri seçin. Bunları içeren ürünler soluk görünür ve işaretlenir.',
+      active:n=>n+' alerjen filtreleniyor', contains:'İçerir', ingredients:'İçindekiler', allergens:'Alerjenler',
+      noAlg:'Listelenen alerjenlerden hiçbirini içermez.', algAsk:'Alerjen bilgisi için lütfen ekibimize danışın.', algAskShort:'Ekibimize danışın', prev:'‹ Önceki', next:'Sonraki ›', close:'Kapat', closeX:'Kapat ✕',
+      algKey:'Alerjen', algNone:'Yok', details:'detaylar'},
+  en:{menu:'Menu', allergen:'Allergens', clear:'Clear', done:'Done', top:'Back to top ↑', cats:'Categories',
+      vat:'All prices include VAT and are in Turkish lira (₺).',
+      allergyNote:'Allergen information follows our recipes. Everything is prepared in one kitchen, so traces may be present. If you have a food allergy, please tell our team before you order.',
+      fTitle:'Allergen filter', fHelp:'Select the allergens you avoid. Dishes that contain them are dimmed and marked.',
+      active:n=>n+' allergen'+(n>1?'s':'')+' filtered', contains:'Contains', ingredients:'Ingredients', allergens:'Allergens',
+      noAlg:'Contains none of the listed allergens.', algAsk:'Please ask our team for allergen information.', algAskShort:'Ask our team', prev:'‹ Previous', next:'Next ›', close:'Close', closeX:'Close ✕',
+      algKey:'Allergens', algNone:'None', details:'details'}
+};
+
+/* ── state ── */
+const store = {
+  get(k){ try{ return localStorage.getItem(k) }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} }
+};
+let L = 'tr';
+let avoid = new Set((store.get('nei-avoid')||'').split(',').filter(k=>ALLERGENS[k]));
+let current = null;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const t = k => UI[L][k];
+const hits = it => (it.alg||[]).filter(a => avoid.has(a));
+
+/* ── render ── */
+function renderCats(){
+  $('#cats').innerHTML = CATS.map(c => `<a href="#${c.id}" data-cat="${c.id}">${esc(c[L])}</a>`).join('');
+  $('.bar').setAttribute('aria-label', t('cats'));
+}
+
+function card(it, eager){
+  const h = hits(it);
+  const alg = !it.alg ? esc(t('algAskShort')) : it.alg.length
+    ? it.alg.map(a => `<span class="${avoid.has(a)?'hit':''}">${esc(ALLERGENS[a][L])}</span>`).join(' · ')
+    : esc(t('algNone'));
+  const diet = it.diet.length ? `<div class="diet">${it.diet.map(d=>`<span>${esc(DIET[d][L])}</span>`).join('')}</div>` : '';
+  const flag = h.length ? `<div class="flag">${esc(t('contains'))}: ${h.map(a=>esc(ALLERGENS[a][L])).join(', ')}</div>` : '';
+  return `<article class="item${h.length?' blocked':''}" id="urun-${it.id}">
+    <div class="ph${it.img?'':' empty'}">${it.img?`<img src="img/card/${it.img}.jpg" alt="${esc(it.name[L])}" width="540" height="582" ${eager?'':'loading="lazy"'} decoding="async">`:'<span class="mark" aria-hidden="true">neí</span>'}${diet}${flag}</div>
+    <div class="nm"><h3>${esc(it.name[L])}</h3><span class="pr">${it.price}</span></div>
+    <div class="sub">${esc(it.sub[L])}</div>
+    <div class="ing">${it.ing[L].map(esc).join(' / ')}</div>
+    <div class="alg"><span class="k">${esc(t('algKey'))}</span> ${alg}</div>
+    <button class="open" type="button" data-open="${it.id}" aria-label="${esc(it.name[L])}, ${it.price} ₺ — ${esc(t('details'))}"></button>
+  </article>`;
+}
+
+function renderMenu(){
+  let first = true;
+  $('#menu').innerHTML = CATS.map(c => {
+    const list = ITEMS.filter(i => i.cat === c.id);
+    const html = `<section class="sec" id="${c.id}" aria-labelledby="h-${c.id}">
+      <h2 id="h-${c.id}">${esc(c[L])}</h2>
+      <div class="grid">${list.map(i => card(i, first)).join('')}</div>
+    </section>`;
+    first = false;
+    return html;
+  }).join('');
+}
+
+function renderChrome(){
+  document.documentElement.lang = L;
+  $('#app').lang = L;
+  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t(el.dataset.t) });
+  $('#lang-tr').setAttribute('aria-pressed', L==='tr');
+  $('#lang-en').setAttribute('aria-pressed', L==='en');
+  const n = avoid.size;
+  $('#fcount').hidden = !n; $('#fcount').textContent = n;
+  $('#fstrip').hidden = !n;
+  $('#fstrip-txt').textContent = n ? t('active')(n) : '';
+  document.documentElement.style.setProperty('--bar-h', (n ? 50 + 36 : 50) + 'px');
+}
+
+function renderAll(){ renderChrome(); renderCats(); renderMenu(); syncActive(); }
+
+/* ── dialog helpers: native <dialog> with fallback for older iOS/Android ── */
+const canDlg = typeof HTMLDialogElement === 'function' && 'showModal' in HTMLDialogElement.prototype;
+function show(d){
+  if(d.open) return;
+  if(canDlg) d.showModal(); else { d.setAttribute('open',''); d.classList.add('fallback'); }
+  document.documentElement.classList.add('lock');
+}
+function hide(d){
+  if(canDlg && d.open) d.close(); else if(!canDlg){ d.removeAttribute('open'); d.dispatchEvent(new Event('close')); }
+}
+document.querySelectorAll('dialog').forEach(d => d.addEventListener('close', () => {
+  if(!document.querySelector('dialog[open]')) document.documentElement.classList.remove('lock');
+}));
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && !canDlg) document.querySelectorAll('dialog[open]').forEach(hide); });
+
+/* ── detail sheet ── */
+const dlg = $('#dlg');
+function openItem(id){
+  const i = ITEMS.findIndex(x => x.id === id); if(i < 0) return;
+  const it = ITEMS[i]; current = i;
+  const h = new Set(hits(it));
+  const chips = !it.alg ? `<div class="none">${esc(t('algAsk'))}</div>` : it.alg.length
+    ? `<div class="chips">${it.alg.map(a=>`<span class="chip${h.has(a)?' hit':''}">${esc(ALLERGENS[a][L])}</span>`).join('')}</div>`
+    : `<div class="none">${esc(t('noAlg'))}</div>`;
+  const diet = it.diet.length ? `<div class="chips">${it.diet.map(d=>`<span class="chip solid">${esc(DIET[d][L])}</span>`).join('')}</div>` : '';
+  dlg.innerHTML = `<div lang="${L}">
+    <div class="d-ph${it.img?'':' empty'}">${it.img?`<img src="img/full/${it.img}.jpg" alt="${esc(it.name[L])}" width="960" height="1034">`:'<span class="mark" aria-hidden="true">neí</span>'}<button class="x" type="button" data-close>${esc(t('closeX'))}</button></div>
+    <div class="d-body">
+      <div class="d-nm"><h2 id="d-name">${esc(it.name[L])}</h2><span class="pr">${it.price} ₺</span></div>
+      <div class="d-sub">${esc(it.sub[L])}</div>
+      <p class="d-about">${esc(it.about[L])}</p>
+      <div class="lbl">${esc(t('ingredients'))}</div>
+      <div class="d-ing">${it.ing[L].map(esc).join(' / ')}</div>
+      <div class="lbl">${esc(t('allergens'))}</div>
+      ${chips}
+      ${diet}
+      <p class="note">${esc(t('allergyNote'))}</p>
+    </div>
+    <div class="d-nav">
+      <button type="button" data-step="-1">${esc(t('prev'))}</button>
+      <button type="button" data-close>${esc(t('close'))}</button>
+      <button type="button" data-step="1">${esc(t('next'))}</button>
+    </div>
+  </div>`;
+  show(dlg);
+  dlg.scrollTop = 0;
+}
+dlg.addEventListener('click', e => {
+  if(e.target === dlg || e.target.closest('[data-close]')) return hide(dlg);
+  const s = e.target.closest('[data-step]');
+  if(s){ const n = (current + Number(s.dataset.step) + ITEMS.length) % ITEMS.length; openItem(ITEMS[n].id); }
+});
+dlg.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight') dlg.querySelector('[data-step="1"]')?.click();
+  if(e.key === 'ArrowLeft')  dlg.querySelector('[data-step="-1"]')?.click();
+});
+dlg.addEventListener('close', () => {
+  const el = current != null && document.querySelector(`[data-open="${ITEMS[current].id}"]`);
+  if(el) el.focus({preventScroll:true});
+});
+
+/* ── allergen filter sheet ── */
+const fdlg = $('#fdlg');
+function renderFilter(){
+  fdlg.innerHTML = `<div lang="${L}">
+    <div class="f-body">
+      <h2 id="f-title">${esc(t('fTitle'))}</h2>
+      <p>${esc(t('fHelp'))}</p>
+      <div class="opts">${Object.keys(ALLERGENS).filter(k => ITEMS.some(i => (i.alg||[]).includes(k))).map(k => `<button type="button" class="opt" id="opt-${k}" data-k="${k}" aria-pressed="${avoid.has(k)}"><span class="box" aria-hidden="true"></span><span>${esc(ALLERGENS[k][L])}</span></button>`).join('')}</div>
+    </div>
+    <div class="f-act">
+      <button type="button" id="f-clear">${esc(t('clear'))}</button>
+      <button type="button" class="go" id="f-done">${esc(t('done'))}</button>
+    </div>
+  </div>`;
+}
+function saveAvoid(){ store.set('nei-avoid', [...avoid].join(',')); renderChrome(); renderMenu(); syncActive(); }
+$('#fbtn').addEventListener('click', () => { renderFilter(); show(fdlg); });
+fdlg.addEventListener('click', e => {
+  if(e.target === fdlg) return hide(fdlg);
+  const o = e.target.closest('.opt');
+  if(o){ const k = o.dataset.k; avoid.has(k) ? avoid.delete(k) : avoid.add(k); o.setAttribute('aria-pressed', avoid.has(k)); saveAvoid(); return; }
+  if(e.target.closest('#f-clear')){ avoid.clear(); fdlg.querySelectorAll('.opt').forEach(b=>b.setAttribute('aria-pressed','false')); saveAvoid(); return; }
+  if(e.target.closest('#f-done')) hide(fdlg);
+});
+$('#fstrip-clear').addEventListener('click', () => { avoid.clear(); saveAvoid(); });
+
+/* ── language ── */
+function setLang(l){ if(l === L) return; L = l; renderAll(); }
+$('#lang-tr').addEventListener('click', () => setLang('tr'));
+$('#lang-en').addEventListener('click', () => setLang('en'));
+
+/* ── navigation ── */
+const smooth = () => matchMedia('(prefers-reduced-motion: no-preference)').matches ? 'smooth' : 'auto';
+$('#cats').addEventListener('click', e => {
+  const a = e.target.closest('a[data-cat]'); if(!a) return;
+  e.preventDefault();
+  document.getElementById('h-'+a.dataset.cat)?.scrollIntoView({behavior:smooth(), block:'start'});
+});
+$('#totop').addEventListener('click', e => { e.preventDefault(); window.scrollTo({top:0, behavior:smooth()}); });
+$('#menu').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if(b) openItem(b.dataset.open); });
+
+let activeCat = null;
+function syncActive(){
+  const bar = $('.bar').getBoundingClientRect().bottom + 8;
+  let id = CATS[0].id;
+  for(const c of CATS){ const s = document.getElementById(c.id); if(s && s.getBoundingClientRect().top - bar <= 0) id = c.id; }
+  if(innerHeight + scrollY >= document.documentElement.scrollHeight - 4) id = CATS[CATS.length-1].id;
+  document.querySelectorAll('#cats a').forEach(a => a.setAttribute('aria-current', a.dataset.cat === id ? 'true' : 'false'));
+  if(id !== activeCat){
+    activeCat = id;
+    const a = document.querySelector(`#cats a[data-cat="${id}"]`), box = $('#cats');
+    if(a) box.scrollTo({left: a.offsetLeft - box.offsetLeft - 2, behavior: smooth()});
+  }
+}
+let ticking = false;
+addEventListener('scroll', () => { if(!ticking){ ticking = true; requestAnimationFrame(() => { syncActive(); ticking = false; }); } }, {passive:true});
+addEventListener('resize', syncActive);
+
+renderAll();
+const start = location.hash.slice(1);
+if(start && document.getElementById('h-'+start)) document.getElementById('h-'+start).scrollIntoView();
+</script>
+
+</body>
+</html>
