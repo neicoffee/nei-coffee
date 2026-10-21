@@ -89,6 +89,8 @@ button{font:inherit;color:inherit;text-transform:inherit;letter-spacing:inherit;
 .pr{flex:none;font-size:var(--t-name);font-variant-numeric:tabular-nums}
 .sub{margin-top:7px;font-size:var(--t-caption);letter-spacing:.025em;line-height:1.35;text-transform:uppercase}
 .ing{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);font-size:var(--t-caption);letter-spacing:.025em;line-height:1.5;text-transform:uppercase}
+.opt-line{margin-top:9px;font-size:var(--t-caption);letter-spacing:.025em;line-height:1.5;text-transform:uppercase}
+.opt-line .k{color:var(--ink-soft);margin-right:4px}
 .alg{margin-top:9px;font-size:var(--t-caption);letter-spacing:.025em;line-height:1.5;text-transform:uppercase;color:var(--ink-soft)}
 .alg .k{color:var(--ink);margin-right:4px}
 .alg .hit{color:var(--warn);text-decoration:underline;text-underline-offset:2px}
@@ -238,7 +240,8 @@ const ALLERGENS = {
   corn:      {tr:'Mısır',                  en:'Corn'},
   mushroom:  {tr:'Mantar',                 en:'Mushroom'},
   basil:     {tr:'Fesleğen',               en:'Basil'},
-  spices:    {tr:'Baharatlar',             en:'Spices'}
+  spices:    {tr:'Baharatlar',             en:'Spices'},
+  curry:     {tr:'Köri',                   en:'Curry'}
 };
 
 const DIET = {veg:{tr:'Vejetaryen',en:'Vegetarian'}, spicy:{tr:'Acılı',en:'Spicy'}};
@@ -450,13 +453,14 @@ const ITEMS = [
    sub:{tr:'Kremalı tavuk ve marul', en:'Creamy chicken and lettuce'},
    about:{tr:'Krema, baharatlar, marul ve tavuk; yanına baby patates ve yeşillik ile servis edilir.', en:'Chicken with cream, spices and lettuce; served with baby potatoes and greens.'},
    ing:{tr:['Tavuk','Krema','Baharatlar','Marul','Baby patates','Yeşillik'], en:['Chicken','Cream','Spices','Lettuce','Baby potatoes','Greens']},
-   alg:['spices','egg','sulphite','milk'], diet:[]},
+   opt:{tr:['Klasik','Körili & Mantarlı'], en:['Classic','Curry & Mushroom']},
+   alg:['spices','curry','egg','sulphite','milk'], diet:[]},
 
   {id:'steak-sandvic', cat:'sandvic', img:'dsc05648', price:590,
    name:{tr:'Steak Sandviç', en:'Steak Sandwich'},
-   sub:{tr:'Bonfile ve sotelenmiş biber', en:'Beef tenderloin and sautéed peppers'},
-   about:{tr:'Bonfile, sotelenmiş biberler; yanına baby patates ve yeşillik ile servis edilir.', en:'Beef tenderloin and sautéed peppers; served with baby potatoes and greens.'},
-   ing:{tr:['Bonfile','Sotelenmiş biberler','Baby patates','Yeşillik'], en:['Beef tenderloin','Sautéed peppers','Baby potatoes','Greens']},
+   sub:{tr:'Bonfile, biber, sarımsak ve soğan', en:'Beef tenderloin, peppers, garlic and onion'},
+   about:{tr:'Bonfile, sotelenmiş biberler, sotelenmiş sarımsak ve soğan; yanına baby patates ve yeşillik ile servis edilir.', en:'Beef tenderloin with sautéed peppers, garlic and onion; served with baby potatoes and greens.'},
+   ing:{tr:['Bonfile','Sotelenmiş biberler','Sotelenmiş sarımsak','Sotelenmiş soğan','Baby patates','Yeşillik'], en:['Beef tenderloin','Sautéed peppers','Sautéed garlic','Sautéed onion','Baby potatoes','Greens']},
    alg:['egg','sulphite','mustard','soy','milk'], diet:[]},
 
   {id:'hellim-sandvic', cat:'sandvic', img:'dsc05654', price:320,
@@ -474,14 +478,14 @@ const UI = {
       fTitle:'Alerjen filtresi', fHelp:'Kaçınmak istediğiniz alerjenleri seçin. Bunları içeren ürünler soluk görünür ve işaretlenir.',
       active:n=>n+' alerjen filtreleniyor', contains:'İçerir', ingredients:'İçindekiler', allergens:'Alerjenler',
       noAlg:'Listelenen alerjenlerden hiçbirini içermez.', algAsk:'Alerjen bilgisi için lütfen ekibimize danışın.', algAskShort:'Ekibimize danışın', prev:'‹ Önceki', next:'Sonraki ›', close:'Kapat', closeX:'Kapat ✕',
-      algKey:'Alerjen', orderNote:'Gıda alerjiniz varsa siparişten önce lütfen ekibimize bildirin.', algNone:'Yok', details:'detaylar'},
+      algKey:'Alerjen', optKey:'Seçenek', options:'Seçenekler', orderNote:'Gıda alerjiniz varsa siparişten önce lütfen ekibimize bildirin.', algNone:'Yok', details:'detaylar'},
   en:{menu:'Menu', allergen:'Allergens', clear:'Clear', done:'Done', top:'Back to top ↑', cats:'Categories',
       vat:'All prices include VAT and are in Turkish lira (₺).',
       allergyNote:'Allergen information follows our recipes. Everything is prepared in one kitchen, so traces may be present. If you have a food allergy, please tell our team before you order.',
       fTitle:'Allergen filter', fHelp:'Select the allergens you avoid. Dishes that contain them are dimmed and marked.',
       active:n=>n+' allergen'+(n>1?'s':'')+' filtered', contains:'Contains', ingredients:'Ingredients', allergens:'Allergens',
       noAlg:'Contains none of the listed allergens.', algAsk:'Please ask our team for allergen information.', algAskShort:'Ask our team', prev:'‹ Previous', next:'Next ›', close:'Close', closeX:'Close ✕',
-      algKey:'Allergens', orderNote:'If you have a food allergy, please tell our team before you order.', algNone:'None', details:'details'}
+      algKey:'Allergens', optKey:'Choice', options:'Choices', orderNote:'If you have a food allergy, please tell our team before you order.', algNone:'None', details:'details'}
 };
 
 /* ── state ── */
@@ -516,6 +520,7 @@ function card(it, eager){
     <div class="nm"><h3>${esc(it.name[L])}</h3><span class="pr">${it.price} ₺</span></div>
     <div class="sub">${esc(it.sub[L])}</div>
     <div class="ing">${it.ing[L].map(esc).join(' / ')}</div>
+    ${it.opt ? `<div class="opt-line"><span class="k">${esc(t('optKey'))}</span> ${it.opt[L].map(esc).join(' / ')}</div>` : ''}
     <div class="alg"><span class="k">${esc(t('algKey'))}</span> ${alg}</div>
     <button class="open" type="button" data-open="${it.id}" aria-label="${esc(it.name[L])}, ${it.price} ₺ — ${esc(t('details'))}"></button>
   </article>`;
@@ -582,6 +587,7 @@ function openItem(id){
       <p class="d-about">${esc(it.about[L])}</p>
       <div class="lbl">${esc(t('ingredients'))}</div>
       <div class="d-ing">${it.ing[L].map(esc).join(' / ')}</div>
+      ${it.opt ? `<div class="lbl">${esc(t('options'))}</div><div class="chips">${it.opt[L].map(o=>`<span class="chip">${esc(o)}</span>`).join('')}</div>` : ''}
       <div class="lbl">${esc(t('allergens'))}</div>
       ${chips}
       ${diet}
