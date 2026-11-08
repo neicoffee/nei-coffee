@@ -509,6 +509,9 @@ let current = null;
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const t = k => UI[L][k];
+/* yabancı kelimeler büyük harfte noktasız I ile yazılsın (FETTUCCINE, SINGLE) */
+const FOREIGN = /(^|[^\p{L}])(arrabbiata|chia|confit|croi|fettuccine|single|iceberg)(?=[^\p{L}]|$)/giu;
+const fx = s => { const e = esc(s); return L === 'tr' ? e.replace(FOREIGN, (m, p, w) => p + '<span lang="en">' + w + '</span>') : e; };
 const hits = it => (it.alg||[]).filter(a => avoid.has(a));
 
 /* ── render ── */
@@ -526,10 +529,10 @@ function card(it, eager){
   const flag = h.length ? `<div class="flag">${esc(t('contains'))}: ${h.map(a=>esc(ALLERGENS[a][L])).join(', ')}</div>` : '';
   return `<article class="item${h.length?' blocked':''}" id="urun-${it.id}">
     <div class="ph${it.img?'':' empty'}">${it.img?`<img src="${it.img}.jpg" alt="${esc(it.name[L])}" width="540" height="582" ${eager?'':'loading="lazy"'} decoding="async">`:'<span class="mark" aria-hidden="true">neí</span>'}${diet}${flag}</div>
-    <div class="nm"><h3>${esc(it.name[L])}</h3><span class="pr">${it.price} ₺</span></div>
-    <div class="sub">${esc(it.sub[L])}</div>
-    <div class="ing">${it.ing[L].map(esc).join(' / ')}</div>
-    ${it.opt ? `<div class="opt-line"><span class="k">${esc(t('optKey'))}</span> ${it.opt[L].map(esc).join(' / ')}</div>` : ''}
+    <div class="nm"><h3>${fx(it.name[L])}</h3><span class="pr">${it.price} ₺</span></div>
+    <div class="sub">${fx(it.sub[L])}</div>
+    <div class="ing">${it.ing[L].map(fx).join(' / ')}</div>
+    ${it.opt ? `<div class="opt-line"><span class="k">${esc(t('optKey'))}</span> ${it.opt[L].map(fx).join(' / ')}</div>` : ''}
     <div class="alg"><span class="k">${esc(t('algKey'))}</span> ${alg}</div>
     <button class="open" type="button" data-open="${it.id}" aria-label="${esc(it.name[L])}, ${it.price} ₺ — ${esc(t('details'))}"></button>
   </article>`;
@@ -591,12 +594,12 @@ function openItem(id){
   dlg.innerHTML = `<div lang="${L}">
     <div class="d-ph${it.img?'':' empty'}">${it.img?`<img src="${it.img}.jpg" alt="${esc(it.name[L])}" width="960" height="1034">`:'<span class="mark" aria-hidden="true">neí</span>'}<button class="x" type="button" data-close>${esc(t('closeX'))}</button></div>
     <div class="d-body">
-      <div class="d-nm"><h2 id="d-name">${esc(it.name[L])}</h2><span class="pr">${it.price} ₺</span></div>
-      <div class="d-sub">${esc(it.sub[L])}</div>
+      <div class="d-nm"><h2 id="d-name">${fx(it.name[L])}</h2><span class="pr">${it.price} ₺</span></div>
+      <div class="d-sub">${fx(it.sub[L])}</div>
       <p class="d-about">${esc(it.about[L])}</p>
       <div class="lbl">${esc(t('ingredients'))}</div>
-      <div class="d-ing">${it.ing[L].map(esc).join(' / ')}</div>
-      ${it.opt ? `<div class="lbl">${esc(t('options'))}</div><div class="chips">${it.opt[L].map(o=>`<span class="chip">${esc(o)}</span>`).join('')}</div>` : ''}
+      <div class="d-ing">${it.ing[L].map(fx).join(' / ')}</div>
+      ${it.opt ? `<div class="lbl">${esc(t('options'))}</div><div class="chips">${it.opt[L].map(o=>`<span class="chip">${fx(o)}</span>`).join('')}</div>` : ''}
       <div class="lbl">${esc(t('allergens'))}</div>
       ${chips}
       ${diet}
